@@ -1,45 +1,26 @@
-import { useContext, useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { VersionResponse } from './generated/api';
-import { GrpcClientContext } from './providers/GrpcClientContextProvider';
+import React from 'react';
+import './App.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Layout from './layout/Layout';
+import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
+import ConnectedNetworksPage from './pages/ConnectedNetworksPage';
+import { ThemeProvider } from '@mui/material';
+import { appTheme } from './themes/theme';
 
-function App() {
-
-  const grpcClients = useContext(GrpcClientContext);
-
-  if (!grpcClients) {
-    return <div>Loading...</div>;
-  }
-
-  const [apiVersion, setApiVersion] = useState<VersionResponse | undefined>();
-
-  useEffect(() => {
-    getVersions();
-  }, []);
-
-  const getVersions = async () => {
-    if (grpcClients.apiClient) {
-      const apiVersionRequest = await grpcClients.apiClient.getVersion({}, {});
-
-      setApiVersion(apiVersionRequest.response);
-    }
-  };
-
+const App: React.FC = () => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React + gRPC Web Server</h1>
-      <p>gRPC Server API Version: {apiVersion?.version}</p>
-    </>
+    <BrowserRouter>
+      <ThemeProvider theme={appTheme}>
+        <Layout>
+          <Routes>
+            <Route path='/' element={<HomePage />} />
+            <Route path='/about' element={<AboutPage />} />
+            <Route path='/networks' element={<ConnectedNetworksPage />} />
+          </Routes>
+        </Layout>
+      </ThemeProvider>
+    </BrowserRouter>
   );
 };
 

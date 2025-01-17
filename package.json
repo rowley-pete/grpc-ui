@@ -8,13 +8,17 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "gen:protobuf-ts": "protoc -I=../gRPC.Server/gRPC.Server.Api/Protos api.proto --ts_out=./src/generated"
+    "gen:protobuf-ts": "protoc -I=./src/proto ./src/proto/*.proto --ts_out=./src/generated"
   },
   "dependencies": {
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^6.4.0",
+    "@mui/material": "^6.4.0",
     "@protobuf-ts/grpcweb-transport": "^2.9.4",
     "@protobuf-ts/plugin": "^2.9.4",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.1.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

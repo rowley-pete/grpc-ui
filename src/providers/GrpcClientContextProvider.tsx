@@ -1,9 +1,12 @@
 import { createContext, ReactNode, useMemo } from 'react';
 import { ApiServiceClient } from '../generated/api.client';
 import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport';
+import { NetworkServiceClient } from '../generated/network.client';
+
 
 interface GrpcClients {
   apiClient: ApiServiceClient | undefined;
+  networkClient: NetworkServiceClient | undefined;
 }
 
 interface GrpcClientProviderProps {
@@ -21,6 +24,7 @@ const GrpcClientContextProvider: React.FC<GrpcClientProviderProps> = ({ children
   const contextValue = useMemo(
     () => ({
       apiClient: new ApiServiceClient(transport),
+      networkClient: new NetworkServiceClient(transport)
     }),
     []
   );
